@@ -1,5 +1,6 @@
 package com.atguigu.news_0224;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
@@ -8,6 +9,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
+
+import com.atguigu.news_0224.activity.GuideActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -18,6 +21,14 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         activity_main = (RelativeLayout)findViewById(R.id.activity_main);
+        setAnimation();
+
+    }
+
+    /**
+     * 欢迎页面的动画
+     */
+    private void setAnimation() {
         //三个动画,旋转动画,渐变动画,缩放动画
         RotateAnimation ra = new RotateAnimation(0, 360, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         //设置持续的时间
@@ -61,7 +72,9 @@ public class WelcomeActivity extends AppCompatActivity {
          */
         @Override
         public void onAnimationEnd(Animation animation) {
-
+            Intent intent = new Intent(WelcomeActivity.this, GuideActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         /**
