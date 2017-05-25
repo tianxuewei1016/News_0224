@@ -1,6 +1,7 @@
 package com.atguigu.news_0224.fragment;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -8,9 +9,9 @@ import android.widget.RadioGroup;
 import com.atguigu.news_0224.R;
 import com.atguigu.news_0224.base.BaseFragment;
 import com.atguigu.news_0224.base.BasePager;
-import com.atguigu.news_0224.newscenter.view.SettingPager;
+import com.atguigu.news_0224.pager.SettingPager;
 import com.atguigu.news_0224.pager.HomePager;
-import com.atguigu.news_0224.pager.NewsCenterPager;
+import com.atguigu.news_0224.newscenter.view.NewsCenterPager;
 import com.atguigu.news_0224.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -72,6 +73,28 @@ public class ContentFragment extends BaseFragment {
         });
         //默认选中新闻
         rgMain.check(R.id.rb_news);
+
+        //监听页面的选中
+        viewpager.addOnPageChangeListener(new MyOnPageChangeListener());
+        basePagers.get(1).initData();//孩子的视图和父类的FrameLayout结合
+    }
+
+    class MyOnPageChangeListener implements ViewPager.OnPageChangeListener{
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+        basePagers.get(position).initData();//孩子的视图和父类的FrameLayout结合
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 
     /**
