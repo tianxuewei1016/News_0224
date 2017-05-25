@@ -1,7 +1,6 @@
 package com.atguigu.news_0224.fragment;
 
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -12,6 +11,7 @@ import com.atguigu.news_0224.base.BasePager;
 import com.atguigu.news_0224.newscenter.view.SettingPager;
 import com.atguigu.news_0224.pager.HomePager;
 import com.atguigu.news_0224.pager.NewsCenterPager;
+import com.atguigu.news_0224.view.NoScrollViewPager;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class ContentFragment extends BaseFragment {
 
 
     @InjectView(R.id.viewpager)
-    ViewPager viewpager;
+    NoScrollViewPager viewpager;
     @InjectView(R.id.rg_main)
     RadioGroup rgMain;
 

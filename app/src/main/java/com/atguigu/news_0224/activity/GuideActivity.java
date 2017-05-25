@@ -105,6 +105,7 @@ public class GuideActivity extends AppCompatActivity {
 //            红点移动的坐标 = 起始坐标 + 红点移动距离
             maginLeft = position * leftMagin + (int) (leftMagin * positionOffset);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivRedPoint.getLayoutParams();
+            //距离左边的距离产生变化
             params.leftMargin = maginLeft;
             ivRedPoint.setLayoutParams(params);
 
