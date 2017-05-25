@@ -21,12 +21,13 @@ public class NewsCenterPager extends BasePager {
     @Override
     public void initData() {
         super.initData();
-
+        //设置标题
+        tv_title.setText("新闻");
         //实例化视图
         TextView textView = new TextView(mContext);
         textView.setTextSize(20);
         textView.setGravity(Gravity.CENTER);
-        textView.setText("设置");
+        textView.setText("新闻");
         textView.setTextColor(Color.RED);
 
         //和父类的FrameLayout结合
