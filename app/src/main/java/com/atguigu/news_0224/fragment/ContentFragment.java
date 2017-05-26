@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.atguigu.news_0224.R;
+import com.atguigu.news_0224.activity.MainActivity;
 import com.atguigu.news_0224.base.BaseFragment;
 import com.atguigu.news_0224.base.BasePager;
-import com.atguigu.news_0224.pager.SettingPager;
-import com.atguigu.news_0224.pager.HomePager;
 import com.atguigu.news_0224.newscenter.view.NewsCenterPager;
+import com.atguigu.news_0224.pager.HomePager;
+import com.atguigu.news_0224.pager.SettingPager;
 import com.atguigu.news_0224.view.NoScrollViewPager;
+import com.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 
@@ -56,6 +58,9 @@ public class ContentFragment extends BaseFragment {
 
     private void initListener() {
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            //先默认设置不可以滑动
+            MainActivity mainActivity = (MainActivity) mContext;
+            //mainActivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
@@ -64,6 +69,8 @@ public class ContentFragment extends BaseFragment {
                         break;
                     case R.id.rb_news:
                         viewpager.setCurrentItem(1,false);
+                        //当切换到新闻的时候，修改成可以滑动
+                        mainActivity.getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
                         break;
                     case R.id.rb_setting:
                         viewpager.setCurrentItem(2,false);
