@@ -7,6 +7,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.atguigu.news_0224.R;
+import com.atguigu.news_0224.activity.MainActivity;
 
 /**
  * 作者：田学伟 on 2017/5/25 17:14
@@ -18,7 +19,7 @@ import com.atguigu.news_0224.R;
 
 public class BasePager {
 
-    public  final Context mContext;
+    public final Context mContext;
     public ImageButton ib_menu;
     public TextView tv_title;
     public FrameLayout fl_main;
@@ -38,6 +39,13 @@ public class BasePager {
         ib_menu = (ImageButton) view.findViewById(R.id.ib_menu);
         tv_title = (TextView) view.findViewById(R.id.tv_title);
         fl_main = (FrameLayout) view.findViewById(R.id.fl_main);
+        ib_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) mContext;
+                mainActivity.getSlidingMenu().toggle();//关<->开
+            }
+        });
         return view;
     }
 

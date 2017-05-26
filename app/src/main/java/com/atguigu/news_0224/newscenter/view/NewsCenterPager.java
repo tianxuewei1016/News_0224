@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.atguigu.news_0224.activity.MainActivity;
 import com.atguigu.news_0224.base.BasePager;
 import com.atguigu.news_0224.bean.NewsCenterBean;
-import com.atguigu.news_0224.fragment.LeftMunuFragment;
+import com.atguigu.news_0224.fragment.LeftMenuFragment;
 import com.atguigu.news_0224.utils.Constants;
 import com.google.gson.Gson;
 
@@ -98,7 +98,7 @@ public class NewsCenterPager extends BasePager {
         //把新闻中心的数据传递给左侧菜单
         MainActivity mainActivity = (MainActivity) mContext;
         //得到左侧菜单
-        LeftMunuFragment leftMunuFragment = mainActivity.getLeftMenuFragment();
+        LeftMenuFragment leftMunuFragment = mainActivity.getLeftMenuFragment();
         //调用LeftMunuFragment的setData
         leftMunuFragment.setData(dataBeanList);
         //2.绑定数据
