@@ -35,7 +35,7 @@ public class MainActivity extends SlidingFragmentActivity {
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
         //6.设置主页面占的宽度dip
-        slidingMenu.setBehindOffset(DensityUtil.dip2px(this,200));
+        slidingMenu.setBehindOffset(DensityUtil.dip2px(this, 200));
 
         initFragment();
     }
@@ -47,10 +47,15 @@ public class MainActivity extends SlidingFragmentActivity {
         //1.得到事物
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //2.替换:左侧菜单和主要
-        ft.replace(R.id.fl_leftmenu,new LeftMunuFragment(),LEFTMENU_TAG);
-        ft.replace(R.id.fl_content,new ContentFragment(),  CONENT_TAG);
+        ft.replace(R.id.fl_leftmenu, new LeftMunuFragment(), LEFTMENU_TAG);
+        ft.replace(R.id.fl_content, new ContentFragment(), CONENT_TAG);
 
         //3.提交
         ft.commit();
+    }
+
+    public LeftMunuFragment getLeftMenuFragment() {
+        //找同一个实例
+        return (LeftMunuFragment) getSupportFragmentManager().findFragmentByTag(LEFTMENU_TAG);
     }
 }
