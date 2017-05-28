@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.atguigu.beijingnews.R;
+import com.atguigu.beijingnews.adapter.TabDetailPagerAdapter;
 import com.atguigu.beijingnews.base.MenuDetailBasePager;
 import com.atguigu.beijingnews.bean.NewsCenterBean;
 import com.atguigu.beijingnews.bean.TabDetailPagerBean;
@@ -15,6 +16,8 @@ import com.google.gson.Gson;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -32,6 +35,8 @@ public class TabDetailPager extends MenuDetailBasePager {
     @InjectView(R.id.listview)
     ListView listview;
     private String url;
+    private TabDetailPagerAdapter adapter;
+    private List<TabDetailPagerBean.DataEntity.NewsEntity> news;
 
     public TabDetailPager(Context context, NewsCenterBean.DataBean.ChildrenBean childrenBean) {
         super(context);
@@ -83,6 +88,9 @@ public class TabDetailPager extends MenuDetailBasePager {
 
     private void processData(String json) {
         TabDetailPagerBean pagerBean = new Gson().fromJson(json,TabDetailPagerBean.class);
-        Log.e("TAG","数据解析成功==TabDetailPager=="+pagerBean.getData().getNews().get(0).getTitle());
+        news = pagerBean.getData().getNews();
+
+        adapter = new TabDetailPagerAdapter(mContext,news);
+        listview.setAdapter(adapter);
     }
 }
