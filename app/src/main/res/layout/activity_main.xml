@@ -4,7 +4,12 @@
     android:id="@+id/fl_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context="com.atguigu.news_0224.activity.MainActivity">
+    tools:context="com.atguigu.beijingnews.activity.MainActivity">
+
+   <!-- <TextView
+        android:text="我是主页面"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />-->
 
 </FrameLayout>
