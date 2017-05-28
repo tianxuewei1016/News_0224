@@ -17,11 +17,17 @@ public class NoScrollViewPager extends ViewPager {
 
     /**
      * 屏蔽Viewpager的滑动功能
+     *
      * @param ev
      * @return
      */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return true;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
     }
 }
