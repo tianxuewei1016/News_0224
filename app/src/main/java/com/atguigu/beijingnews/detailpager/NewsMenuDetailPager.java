@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.atguigu.beijingnews.R;
 import com.atguigu.beijingnews.base.MenuDetailBasePager;
@@ -13,6 +14,10 @@ import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * 作者：尚硅谷-杨光福 on 2017/2/6 11:27
@@ -25,10 +30,15 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
      * 新闻详情页面的数据
      */
     private final List<NewsCenterBean.DataBean.ChildrenBean> childrenData;
+    @InjectView(R.id.indicator)
+    TabPageIndicator indicator;
+    @InjectView(R.id.ib_next)
+    ImageButton ibNext;
+    @InjectView(R.id.viewpager)
+    ViewPager viewpager;
+    private ArrayList<TabDetailPager> tabDetailPagers;
 
-    private ArrayList<TabDetailPager>tabDetailPagers;
-    private ViewPager viewpager;
-    private TabPageIndicator indicator;
+
     public NewsMenuDetailPager(Context context, NewsCenterBean.DataBean dataBean) {
         super(context);
         this.childrenData = dataBean.getChildren();//12条
@@ -38,8 +48,7 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
     public View initView() {
         //新闻详情页面的视图
         View view = View.inflate(mContext, R.layout.news_menu_detail_pager, null);
-        viewpager = (ViewPager) view.findViewById(R.id.viewpager);
-        indicator = (TabPageIndicator) view.findViewById(R.id.indicator);
+        ButterKnife.inject(this, view);
         return view;
     }
 
@@ -49,8 +58,8 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
 
         tabDetailPagers = new ArrayList<>();
         //根据有多少数据创建多少个TabDetailPager，并且把数据传入到对象中
-        for (int i =0;i<childrenData.size();i++){
-            tabDetailPagers.add(new TabDetailPager(mContext,childrenData.get(i)));
+        for (int i = 0; i < childrenData.size(); i++) {
+            tabDetailPagers.add(new TabDetailPager(mContext, childrenData.get(i)));
         }
         //设置适配器
         viewpager.setAdapter(new MyPagerAdapter());
@@ -60,7 +69,13 @@ public class NewsMenuDetailPager extends MenuDetailBasePager {
         //监听页面的变化用TabPageIndicator
     }
 
-    class MyPagerAdapter extends PagerAdapter{
+    @OnClick(R.id.ib_next)
+    public void onViewClicked() {
+        //切换到下一个页面
+        indicator.setCurrentItem(viewpager.getCurrentItem()+1);
+    }
+
+    class MyPagerAdapter extends PagerAdapter {
 
         @Override
         public CharSequence getPageTitle(int position) {
