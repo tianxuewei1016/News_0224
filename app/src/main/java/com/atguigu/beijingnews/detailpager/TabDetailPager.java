@@ -26,6 +26,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -90,12 +91,19 @@ public class TabDetailPager extends MenuDetailBasePager {
         llGroupPoint = (LinearLayout) headerView.findViewById(R.id.ll_group_point);
 
         listview.addHeaderView(headerView);
+
+        SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(mContext);
+        soundListener.addSoundEvent(PullToRefreshBase.State.PULL_TO_REFRESH, R.raw.pull_event);
+        soundListener.addSoundEvent(PullToRefreshBase.State.RESET, R.raw.reset_sound);
+        soundListener.addSoundEvent(PullToRefreshBase.State.REFRESHING, R.raw.refreshing_sound);
+        refreshListView.setOnPullEventListener(soundListener);
+
         //设置下拉刷新和上拉刷新
         refreshListView.setOnRefreshListener(new MyOnRefreshListener2());
         return view;
     }
 
-    class MyOnRefreshListener2 implements PullToRefreshBase.OnRefreshListener2<ListView>{
+    class MyOnRefreshListener2 implements PullToRefreshBase.OnRefreshListener2<ListView> {
 
         @Override
         public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -105,10 +113,10 @@ public class TabDetailPager extends MenuDetailBasePager {
 
         @Override
         public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-            if(!TextUtils.isEmpty(moreUrl)) {
+            if (!TextUtils.isEmpty(moreUrl)) {
                 isLoadMore = true;
                 getMoreDataFromNet();
-            }else{
+            } else {
                 Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT).show();
                 refreshListView.onRefreshComplete();
             }
@@ -187,13 +195,13 @@ public class TabDetailPager extends MenuDetailBasePager {
         TabDetailPagerBean pagerBean = new Gson().fromJson(json, TabDetailPagerBean.class);
 
         String more = pagerBean.getData().getMore();
-        if(TextUtils.isEmpty(more)) {
+        if (TextUtils.isEmpty(more)) {
             moreUrl = "";
-        }else{
+        } else {
             moreUrl = Constants.BASE_URL + more;
         }
 
-        if(!isLoadMore) {
+        if (!isLoadMore) {
             news = pagerBean.getData().getNews();
             //设置适配器
             adapter = new TabDetailPagerAdapter(mContext, news);
@@ -228,7 +236,7 @@ public class TabDetailPager extends MenuDetailBasePager {
 
                 llGroupPoint.addView(point);
             }
-        }else{
+        } else {
             isLoadMore = false;
             //更多
             news.addAll(pagerBean.getData().getNews());
