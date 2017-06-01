@@ -191,6 +191,10 @@ public class TabDetailPager extends MenuDetailBasePager {
         //设置数据
         url = Constants.BASE_URL + childrenBean.getUrl();
         Log.e("TAG", "TabDetailPager--url==" + url);
+        String saveJson = CacheUtils.getString(mContext, url);
+        if (!TextUtils.isEmpty(saveJson)) {
+            processData(saveJson);
+        }
         getDataFromNet();
     }
 
@@ -200,6 +204,7 @@ public class TabDetailPager extends MenuDetailBasePager {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG", "请求数据成功==TabDetailPager==" + childrenBean.getTitle());
+                CacheUtils.putString(mContext,url,result);
                 processData(result);
                 //把下拉刷新和上拉刷新隐藏
                 refreshListView.onRefreshComplete();
