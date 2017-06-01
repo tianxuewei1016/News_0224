@@ -110,7 +110,7 @@ public class PhotosMenuDetailPager extends MenuDetailBasePager {
         PhotosMenuDetailPagerBean bean = new Gson().fromJson(json, PhotosMenuDetailPagerBean.class);
         Log.e("TAG", "数组解析数据成功======" + bean.getData().getNews().get(0).getTitle());
         //设置RecyclerView的适配器
-        adapter = new PhotosMenuDetailPagerAdapter(mContext, bean.getData().getNews());
+        adapter = new PhotosMenuDetailPagerAdapter(mContext,bean.getData().getNews(),recyclerview);
         recyclerview.setAdapter(adapter);
 
         //设置布局管理器
