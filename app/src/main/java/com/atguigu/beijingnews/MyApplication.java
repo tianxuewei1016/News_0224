@@ -33,8 +33,8 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG); // 是否输出debug日志, 开启debug会影响性能.
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);     		// 初始化 JPush
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
 
         initImageLoader(this);//初始化ImageLoader
 
@@ -42,6 +42,9 @@ public class MyApplication extends Application {
         ShareSDK.initSDK(this);
 
         initOkhttputil();
+
+        CrashHandler catchHandler = CrashHandler.getInstance();
+        catchHandler.init(getApplicationContext());
 
     }
 
@@ -76,9 +79,10 @@ public class MyApplication extends Application {
 
     /**
      * 得到上下文
+     *
      * @return
      */
-    public static MyApplication getInstance(){
+    public static MyApplication getInstance() {
         return instance;
     }
 }

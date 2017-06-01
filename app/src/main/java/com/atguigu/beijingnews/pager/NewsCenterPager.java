@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.atguigu.baselibrary.CacheUtils;
 import com.atguigu.baselibrary.Constants;
@@ -67,7 +68,7 @@ public class NewsCenterPager extends BasePager {
         fl_main.addView(textView);
 
         String savaJson = CacheUtils.getString(mContext, Constants.NEWSCENTER_PAGER_URL);
-        if(!TextUtils.isEmpty(savaJson)) {
+        if (!TextUtils.isEmpty(savaJson)) {
             processData(savaJson);
         }
 
@@ -83,8 +84,8 @@ public class NewsCenterPager extends BasePager {
         x.http().get(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e("TAG", "请求成功=="+result);
-                CacheUtils.putString(mContext,Constants.NEWSCENTER_PAGER_URL,result);
+                Log.e("TAG", "请求成功==" + result);
+                CacheUtils.putString(mContext, Constants.NEWSCENTER_PAGER_URL, result);
                 processData(result);
             }
 
@@ -128,9 +129,9 @@ public class NewsCenterPager extends BasePager {
         //2.绑定数据
 
         menuDetailBasePagers = new ArrayList<>();
-        menuDetailBasePagers.add(new NewsMenuDetailPager(mainActivity,dataBeanList.get(0)));//新闻详情页面
-        menuDetailBasePagers.add(new TopicMenuDetailPager(mainActivity,dataBeanList.get(0)));//专题详情页面
-        menuDetailBasePagers.add(new PhotosMenuDetailPager(mainActivity,dataBeanList.get(2)));//组图详情页面
+        menuDetailBasePagers.add(new NewsMenuDetailPager(mainActivity, dataBeanList.get(0)));//新闻详情页面
+        menuDetailBasePagers.add(new TopicMenuDetailPager(mainActivity, dataBeanList.get(0)));//专题详情页面
+        menuDetailBasePagers.add(new PhotosMenuDetailPager(mainActivity, dataBeanList.get(2)));//组图详情页面
         menuDetailBasePagers.add(new InteractMenuDetailPager(mainActivity));//互动详情页面
         //调用LeftMunuFragment的setData
         leftMunuFragment.setData(dataBeanList);
@@ -142,6 +143,7 @@ public class NewsCenterPager extends BasePager {
 
     /**
      * 手动解析json数据使用系统的api
+     *
      * @param json
      * @return
      */
@@ -194,7 +196,7 @@ public class NewsCenterPager extends BasePager {
                         itemBean.setChildren(childrenBeans);
                         for (int j = 0; j < children.length(); j++) {
 
-                            NewsCenterBean.DataBean.ChildrenBean  childrenBean = new NewsCenterBean.DataBean.ChildrenBean();
+                            NewsCenterBean.DataBean.ChildrenBean childrenBean = new NewsCenterBean.DataBean.ChildrenBean();
                             //添加到集合中
                             childrenBeans.add(childrenBean);
                             JSONObject childenObje = (JSONObject) children.get(j);
@@ -206,7 +208,6 @@ public class NewsCenterPager extends BasePager {
                             childrenBean.setType(typec);
                             String urlc = childenObje.optString("url");
                             childrenBean.setUrl(urlc);
-
 
 
                         }
@@ -230,29 +231,30 @@ public class NewsCenterPager extends BasePager {
     public void switchPager(int prePosition) {
         //设置标题
         tv_title.setText(dataBeanList.get(prePosition).getTitle());
+        if (prePosition < menuDetailBasePagers.size()) {
+            MenuDetailBasePager menuDetailBasePager = menuDetailBasePagers.get(prePosition);
+            //调用
+            menuDetailBasePager.initData();
+            //视图
+            View rootView = menuDetailBasePager.rootView;
+            fl_main.removeAllViews();//移除之前的
+            fl_main.addView(rootView);
 
-
-        MenuDetailBasePager menuDetailBasePager = menuDetailBasePagers.get(prePosition);
-        //调用
-        menuDetailBasePager.initData();
-        //视图
-        View rootView = menuDetailBasePager.rootView;
-        fl_main.removeAllViews();//移除之前的
-        fl_main.addView(rootView);
-
-        if(prePosition == 2) {
-            //组图
-            ib_swich_list_gird.setVisibility(View.VISIBLE);
-            ib_swich_list_gird.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PhotosMenuDetailPager photosMenuDetailPager = (PhotosMenuDetailPager) menuDetailBasePagers.get(2);
-                    photosMenuDetailPager.swichListGrid(ib_swich_list_gird);
-                }
-            });
-        }else{
-            //其他
-            ib_swich_list_gird.setVisibility(View.GONE);
+            if (prePosition == 2) {
+                //组图
+                ib_swich_list_gird.setVisibility(View.VISIBLE);
+                ib_swich_list_gird.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PhotosMenuDetailPager photosMenuDetailPager = (PhotosMenuDetailPager) menuDetailBasePagers.get(2);
+                        photosMenuDetailPager.swichListGrid(ib_swich_list_gird);
+                    }
+                });
+            } else {
+                //其他
+                ib_swich_list_gird.setVisibility(View.GONE);
+            }
+            Toast.makeText(mContext, "该页面暂时未实现", Toast.LENGTH_SHORT).show();
         }
     }
 }
