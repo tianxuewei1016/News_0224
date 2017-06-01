@@ -21,6 +21,8 @@ public abstract class MenuDetailBasePager {
      * 代表各个菜单详情页面的实例，视图
      */
     public View rootView;
+
+
     public MenuDetailBasePager(Context context){
         this.mContext = context;
         rootView = initView();
